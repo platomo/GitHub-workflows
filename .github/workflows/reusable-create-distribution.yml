@@ -1,21 +1,22 @@
 ---
-# This workflow will install Python dependencies, run tests
+# This workflow is reusable and starts all tests
 
-name: Update Nightly Release
+name: Create and Append Release Assets
 
 on:
   workflow_call:
 
+
 jobs:
   create_distributions:
     runs-on: ${{ matrix.os }}
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: True
       max-parallel: 1
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.11"]
+        os: [ ubuntu-latest ]
+        python-version: [ "3.11" ]
 
     steps:
       - uses: actions/checkout@v3
@@ -23,15 +24,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Create distributions files
+      - name: create Distribution files
         uses: ./.github/workflows/reusable-create-distribution-files.yml
+        secrets: inherit
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body: |
-            This is the latest release and is not production ready.
-            Use at your own risk.
-          name: Nightly
+          generate_release_notes: True
           draft: True
-          prerelease: True
           files: dist/*.zip
