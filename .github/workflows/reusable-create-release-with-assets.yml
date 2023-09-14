@@ -1,0 +1,43 @@
+name: Create Distribution Files
+
+on:
+  workflow_call:
+    inputs:
+      package-version:
+        required: true
+        type: string
+      draft-release:
+        required: true
+        type: boolean
+      pre-release:
+        required: true
+        type: boolean
+jobs:
+  create_distributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3
+      - name: Check-out platomo-build repository
+        uses: actions/checkout@v3
+        with:
+          repository: platomo/platomo-build
+          token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
+          path: platomo-build
+
+      - name: Run Build
+        run: |
+          pip install -r requirements-dev.txt
+          python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate-release-notes: True
+          name: ${{ inputs.package-version }}
+          draft: ${{ inputs.draft-release }}
+          prerelease: ${{ inputs.pre-release }}
+          files: dist/*.zip
