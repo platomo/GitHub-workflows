@@ -2,6 +2,10 @@ name: Create Distribution Files
 
 on:
   workflow_call:
+    secrets:
+      PLATOMO_BUILDER_ACCESS:
+        description: Acces to Platomo Builder Repo
+        required: true
     inputs:
       package-version:
         required: true
