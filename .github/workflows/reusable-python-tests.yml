@@ -1,7 +1,7 @@
 ---
 # This workflow is reusable and starts all tests
 
-name: Run Python Tests
+name: Reusable workflow to run Python tests
 
 on:
   workflow_call:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   test:
-    name: Running test on ${{ inputs.os }} with Python ${{ inputs.py-version }}
+    name: Running tests on ${{ inputs.os }} with Python ${{ inputs.py-version }}
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: ${{ inputs.py-version }}
           cache: 'pip'
-      - name: Install dependencies
+      - name: Install Python dependencies
         shell: bash
         run: |
           python -m pip install --upgrade pip
@@ -38,11 +38,11 @@ jobs:
               pip install -r requirements-dev.txt
           fi
 
-      - name: Lint codebase
+      - name: Lint
         run: |
           flake8 .
-      - name: Execute static type checking
+      - name: Static type checking
         run: |
           mypy .
-      - name: Test with pytest
+      - name: Run pytest
         run: pytest --cov=${{ inputs.test_path }} tests/
