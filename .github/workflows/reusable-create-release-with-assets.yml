@@ -1,4 +1,4 @@
-name: Create Distribution Files
+name: Reusable workflow to create release and append assets 
 
 on:
   workflow_call:
@@ -13,7 +13,7 @@ on:
         required: true
         type: boolean
 jobs:
-  create_distributions:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -28,16 +28,25 @@ jobs:
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
           path: platomo-build
 
-      - name: Run Build
+      - name: Install builder dependencies
         run: |
-          pip install -r requirements-dev.txt
-          python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
+          cd platomo-build
+          python -m pip install --upgrade pip
+          if [ -f "requirements.txt" ]; then
+              pip install -r requirements.txt
+          fi
+          if [ -f "requirements-dev.txt" ]; then
+              pip install -r requirements-dev.txt
+          fi
 
-      - name: Release
+      - name: Build release assets
+        run : python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
+
+      - name: Release and append assets
         uses: softprops/action-gh-release@v1
         with:
           generate-release-notes: True
-          name: ${{ inputs.package-version }}
+          tag_name: ${{ inputs.package-version }}
           draft: ${{ inputs.draft-release }}
           prerelease: ${{ inputs.pre-release }}
-          files: dist/*.zip
+          files: dist/*
