@@ -15,6 +15,8 @@ on:
     secrets:
       PLATOMO_BUILDER_ACCESS:
         required: true
+      DELETE_ASSETS_TOKEN:
+        required: true
 jobs:
   release:
     name: Release version ${{ inputs.package-version }}
@@ -49,7 +51,7 @@ jobs:
       - name: Delete old release assets
         uses: mknejp/delete-release-assets@v1
         with:
-          token: ${{ secrets.RELEASE_ASSETS_TOKEN }}
+          token: ${{ secrets.DELETE_ASSETS_TOKEN }}
           tag:  ${{ inputs.package-version }}
           assets: '*.zip'
     
