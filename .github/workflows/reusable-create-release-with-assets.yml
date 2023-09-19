@@ -12,6 +12,9 @@ on:
       pre-release:
         required: true
         type: boolean
+    secrets:
+      PLATOMO_BUILDER_ACCESS:
+        required: true
 jobs:
   release:
     name: Release version ${{ inputs.package-version }}
