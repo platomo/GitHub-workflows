@@ -53,4 +53,5 @@ jobs:
           tag_name: ${{ inputs.package-version }}
           draft: ${{ inputs.draft-release }}
           prerelease: ${{ inputs.pre-release }}
+          append_body: false
           files: dist/*
