@@ -48,7 +48,7 @@ jobs:
         run : python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
 
       - name: Delete existing release assets
-        run:  gh release delete-asset ${{ inputs.package-version }}
+        run:  gh release delete ${{ inputs.package-version }}
 
       - name: Release and append assets
         uses: softprops/action-gh-release@v1
