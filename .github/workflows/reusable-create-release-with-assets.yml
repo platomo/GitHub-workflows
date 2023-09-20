@@ -48,12 +48,6 @@ jobs:
       - name: Build release assets
         run : python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
 
-      - name: Delete old release assets
-        uses: mknejp/delete-release-assets@v1
-        with:
-          token: ${{ secrets.DELETE_ASSETS_TOKEN }}
-          tag:  ${{ inputs.package-version }}
-          assets: '*.zip'
     
       - name: Release and append assets
         uses: softprops/action-gh-release@v1
