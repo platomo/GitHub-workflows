@@ -15,8 +15,7 @@ on:
     secrets:
       PLATOMO_BUILDER_ACCESS:
         required: true
-      DELETE_ASSETS_TOKEN:
-        required: true
+
 jobs:
   release:
     name: Release version ${{ inputs.package-version }}
