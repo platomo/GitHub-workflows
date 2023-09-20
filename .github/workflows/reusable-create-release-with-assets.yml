@@ -49,12 +49,9 @@ jobs:
         run : python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
         
       - name: Delete existing release assets 
-        run:  gh release delete ${{ inputs.package-version }} 
+        run:  |
+            gh release delete ${{ inputs.package-version }} 
+            gh release create ${{ inputs.package-version }}  dist/* --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
           
-      - name: Release and append assets
-        run: gh release create ${{ inputs.package-version }}  dist/* --generate-notes
-        env:
-          GH_TOKEN: ${{ github.token }}
-      
