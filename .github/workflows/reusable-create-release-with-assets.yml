@@ -15,7 +15,8 @@ on:
     secrets:
       PLATOMO_BUILDER_ACCESS:
         required: true
-
+   
+      
 jobs:
   release:
     name: Release version ${{ inputs.package-version }}
@@ -49,7 +50,8 @@ jobs:
 
       - name: Delete existing release assets
         run:  gh release delete ${{ inputs.package-version }}
-
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Release and append assets
         uses: softprops/action-gh-release@v1
         with:
