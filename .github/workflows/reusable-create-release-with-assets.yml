@@ -58,12 +58,3 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       
-      - name: Release and append assets
-        uses: softprops/action-gh-release@v1
-        with:
-          generate-release-notes: True
-          tag_name: ${{ inputs.package-version }}
-          draft: ${{ inputs.draft-release }}
-          prerelease: ${{ inputs.pre-release }}
-          append_body: false
-          files: dist/*
