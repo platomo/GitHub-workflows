@@ -68,12 +68,12 @@ jobs:
 
       - name: Set release as draft
         if: inputs.draft-release
-        run:  gh release create ${{ inputs.package-version }} --draft --verify-tag
+        run:  gh release edit ${{ inputs.package-version }} --draft --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
 
       - name: Set release as pre-release
         if: inputs.pre-release
-        run:  gh release create ${{ inputs.package-version }} --prerelease --verify-tag
+        run:  gh release edit ${{ inputs.package-version }} --prerelease --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
