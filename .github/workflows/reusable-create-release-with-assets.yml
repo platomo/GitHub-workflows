@@ -65,4 +65,15 @@ jobs:
         run:  gh release create ${{ inputs.package-version }} dist/* --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
-          
+
+      - name: Set release as draft
+        if: draft-release
+        run:  gh release create ${{ inputs.package-version }} --draft --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Set release as pre-release
+        if: pre-release
+        run:  gh release create ${{ inputs.package-version }} --prerelease --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
