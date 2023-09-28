@@ -1,4 +1,7 @@
-name: Reusable workflow to create release and append assets 
+---
+# This workflow is reusable and calls platomo-builder and creates a release.
+
+name: Reusable workflow to create release and append assets
 
 on:
   workflow_call:
@@ -18,7 +21,7 @@ on:
    
       
 jobs:
-  release:
+  build_and_release:
     name: Release version ${{ inputs.package-version }}
     runs-on: ubuntu-latest
     steps:
@@ -54,8 +57,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           
-      - name: Create release and append assets
-        run:  gh release create ${{ inputs.package-version }}  dist/* --generate-notes
+      - name: Create release and upload assets
+        run:  gh release create ${{ inputs.package-version }} dist/* --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
           
