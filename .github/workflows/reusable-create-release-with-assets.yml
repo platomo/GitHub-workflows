@@ -15,6 +15,9 @@ on:
       pre-release:
         required: true
         type: boolean
+      delete-existing:
+        default: false
+        type: boolean
     secrets:
       PLATOMO_BUILDER_ACCESS:
         required: true
@@ -51,8 +54,9 @@ jobs:
       - name: Build release assets
         run : python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
 
-      - name: Delete exisiting release
-        run: gh release delete ${{ inputs.package-version }} 
+      - name: Delete existing release
+        if: delete-existing
+        run: gh release delete ${{ inputs.package-version }} --cleanup-tag --yes
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
