@@ -18,6 +18,9 @@ on:
       delete-existing:
         default: false
         type: boolean
+      ffmpeg-required:
+        default: false
+        type: boolean
     secrets:
       PLATOMO_BUILDER_ACCESS:
         required: true
@@ -39,7 +42,10 @@ jobs:
           repository: platomo/platomo-build
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
           path: platomo-build
-
+      - name: Run ffmpeg
+        if: ffmpeg-required
+        uses: FedericoCarboni/setup-ffmpeg@v2
+        id: setup-ffmpeg
       - name: Install builder dependencies
         run: |
           cd platomo-build
