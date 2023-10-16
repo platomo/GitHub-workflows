@@ -15,6 +15,9 @@ on:
       test_path:
         required: true
         type: string
+      ffmpeg-required:
+        default: false
+        type: boolean
 
 jobs:
   test:
@@ -22,6 +25,9 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v3
+      - name: Run ffmpeg
+        if: ffmpeg-required
+        uses: FedericoCarboni/setup-ffmpeg@v2
       - name: Set up Python ${{ inputs.py-version }}
         uses: actions/setup-python@v4
         with:
