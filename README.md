@@ -1,7 +1,7 @@
 
 <h1 align="center">Github Workflows</h1>
 
-> Github workflows for OT
+> Reusable GitHub Workflows to be used in other repositories
 
 
 
