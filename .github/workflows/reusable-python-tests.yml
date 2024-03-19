@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install ffmpeg
         if: inputs.ffmpeg-required
-        uses: FedericoCarboni/setup-ffmpeg@v2
+        uses: FedericoCarboni/setup-ffmpeg@v3
       - name: Set up Python ${{ inputs.py-version }}
         uses: actions/setup-python@v5
         with:
