@@ -31,13 +31,13 @@ jobs:
     name: Release version ${{ inputs.package-version }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3
       - name: Check-out platomo-build repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: platomo/platomo-build
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
