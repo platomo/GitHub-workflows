@@ -16,7 +16,7 @@
             - name: change version.py
               run:
                   if [ ${{ inputs.package-version }} == 'nightly' ]; then
-                    dt=$(date '+%d/%m/%Y %H:%M:%S');
+                    dt=$(date '+%Y%m%d %H%M%S');
                     sed -i "__version__= ${dt}"
                   else
                     sed -i "__version__= ${inputs.package-version}"
