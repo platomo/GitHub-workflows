@@ -48,18 +48,6 @@ jobs:
           repository: platomo/platomo-build
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
           path: platomo-build
-      - name: Install builder dependencies
-        run: |
-          cd platomo-build
-          python -m pip install --upgrade pip
-          if [ -f "requirements.txt" ]; then
-              pip install -r requirements.txt
-          fi
-          if [ -f "requirements-dev.txt" ]; then
-              pip install -r requirements-dev.txt
-          fi
-      - name: Build release assets
-        run: python ./platomo-build/build.py --inputs.package_version
       - name: Display dist content
         run: ls -ahl dist/
       - name: Remove File
