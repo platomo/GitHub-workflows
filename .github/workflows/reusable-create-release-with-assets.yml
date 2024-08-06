@@ -41,13 +41,13 @@ jobs:
           python-version: 3
 
       - name: Update version.py
-        run:
-            if [ ${{ inputs.package-version }} == 'nightly' ]; then
-              dt=$(date '+%Y%m%d %H%M%S');
-              sed -i "__version__= ${dt}" ${{ inputs.package-path }}/version.py
-            else
-              sed -i "__version__= ${inputs.package-version}" ${{ inputs.package-path }}/version.py
-            fi
+        run: |
+          if [ "${{ inputs.package-version }}" == 'nightly' ]; then
+            dt=$(date '+%Y%m%d %H%M%S')
+            sed -i "s/__version__ = \".*\"/__version__ = \"${dt}\"/" "${{ inputs.package-path }}/version.py"
+          else
+            sed -i "s/__version__ = \".*\"/__version__ = \"${{ inputs.package-version }}\"/" "${{ inputs.package-path }}/version.py"
+          fi
             
       - name: Check-out platomo-build repository
         uses: actions/checkout@v4
