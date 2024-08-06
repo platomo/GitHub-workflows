@@ -14,6 +14,7 @@
     secrets:
       PLATOMO_BUILDER_ACCESS: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
     with:
+      package-path: OTVision
       package-version: ${{ github.ref_name }}
       draft-release: false
       pre-release: false
