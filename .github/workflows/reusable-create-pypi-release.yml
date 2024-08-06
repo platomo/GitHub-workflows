@@ -19,6 +19,10 @@ on:
       package-path:
         required: true
         type: string
+      repository-name:
+        required: false
+        default: testpypi
+        type: string
       repository-url:
         required: false
         default: https://test.pypi.org/legacy/
@@ -32,8 +36,8 @@ jobs:
     name: Build and upload release to TestPyPI
     runs-on: ${{ inputs.os }}
     environment:
-      name: testpypi
-      url: inputs.release_url
+      name: ${{inputs.repository-name}}
+      url: ${{inputs.release_url}}
     permissions:
       actions: read
       contents: read
@@ -51,7 +55,7 @@ jobs:
               dt=$(date '+%Y%m%d %H%M%S');
               sed -i "__version__= ${dt}" ${{ inputs.package-path }}/version.py
             else
-              sed -i "__version__= ${inputs.package-version}" ${{ inputs.package-path }}/version.py
+              sed -i "__version__= ${{inputs.package-version}}" ${{ inputs.package-path }}/version.py
 
       - name: Install pypa/build
         run: >-
