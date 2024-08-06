@@ -47,7 +47,8 @@ jobs:
               sed -i "__version__= ${dt}" ${{ inputs.package-path }}/version.py
             else
               sed -i "__version__= ${inputs.package-version}" ${{ inputs.package-path }}/version.py
-
+            fi
+            
       - name: Check-out platomo-build repository
         uses: actions/checkout@v4
         with:
