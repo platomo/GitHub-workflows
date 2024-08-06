@@ -9,6 +9,9 @@ on:
       package-version:
         required: true
         type: string
+      package-path:
+        required: true
+        type: string
       draft-release:
         required: true
         type: boolean
@@ -36,12 +39,22 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3
+
+      - name: Update version.py
+        run:
+            if [ ${{ inputs.package-version }} == 'nightly' ]; then
+              dt=$(date '+%Y%m%d %H%M%S');
+              sed -i "__version__= ${dt}" ${{ inputs.package-path }}/version.py
+            else
+              sed -i "__version__= ${inputs.package-version}" ${{ inputs.package-path }}/version.py
+
       - name: Check-out platomo-build repository
         uses: actions/checkout@v4
         with:
           repository: platomo/platomo-build
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
           path: platomo-build
+
       - name: Install builder dependencies
         run: |
           cd platomo-build
