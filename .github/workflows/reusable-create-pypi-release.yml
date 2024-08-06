@@ -52,8 +52,8 @@ jobs:
       - name: Update version.py
         run: |
           if [ "${{ inputs.package-version }}" == 'nightly' ]; then
-            dt=$(date '+%Y%m%d %H%M%S')
-            sed -i "s/__version__ = \".*\"/__version__ = \"${dt}\"/" "${{ inputs.package-path }}/version.py"
+            dt=$(date '+%Y%m%d-%H%M%S')
+            sed -i "s/__version__ = \".*\"/__version__ = \"nightly-${dt}\"/" "${{ inputs.package-path }}/version.py"
           else
             sed -i "s/__version__ = \".*\"/__version__ = \"${{ inputs.package-version }}\"/" "${{ inputs.package-path }}/version.py"
           fi
