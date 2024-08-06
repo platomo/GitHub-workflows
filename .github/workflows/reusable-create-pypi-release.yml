@@ -56,7 +56,7 @@ jobs:
               sed -i "__version__= ${dt}" ${{ inputs.package-path }}/version.py
             else
               sed -i "__version__= ${{inputs.package-version}}" ${{ inputs.package-path }}/version.py
-
+            fi
       - name: Install pypa/build
         run: >-
           python -m
