@@ -45,10 +45,13 @@ jobs:
           fi
 
       - name: Lint
+        timeout-minutes: 60
         run: |
           flake8 .
       - name: Static type checking
+        timeout-minutes: 60
         run: |
           mypy .
       - name: Run pytest
+        timeout-minutes: 60
         run: pytest --cov=${{ inputs.test_path }} tests/
