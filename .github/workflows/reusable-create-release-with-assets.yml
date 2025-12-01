@@ -34,7 +34,7 @@ jobs:
     name: Release version ${{ inputs.package-version }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -50,7 +50,7 @@ jobs:
           fi
             
       - name: Check-out platomo-build repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: platomo/platomo-build
           token: ${{ secrets.PLATOMO_BUILDER_ACCESS }}
